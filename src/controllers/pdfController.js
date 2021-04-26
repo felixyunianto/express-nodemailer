@@ -14,8 +14,8 @@ module.exports = {
         { student: student },
         (err, data) => {
           let options = {
-            width: "279mm",
-            height: "215mm",
+            width: "750px",
+            height: "563px",
             format: "Letter",
             orientation: "landscape",
           };

@@ -1,4 +1,6 @@
 const transporter = require("../configs/nodemailers");
+const fs = require('fs');
+
 module.exports = {
   sendMail: (req, res) => {
     const { students } = req;
@@ -18,14 +20,19 @@ module.exports = {
       };
       transporter.sendMail(mailOptions, (err, data) => {
         if (err) {
-          console.log("Error ", err);
+          return res.status(500).send({
+            message : "Something went wrong",
+            status :500,
+            error : err
+          })
         } else {
-          return res.status(200).json({
-            message: "Success send mail",
-            status: 200,
-          });
+          fs.unlinkSync('public/certificate/report' + student.name + '.pdf');
         }
       });
+    });
+    return res.status(200).json({
+      message: "Success send mail",
+      status: 200,
     });
   },
 };
