@@ -3,6 +3,6 @@ const mailController = require('../controllers/mailController');
 const pdfController = require('../controllers/pdfController');
 
 mainRouter.get('/pdf', pdfController.generatedPDF);
-mainRouter.post('/send-mail', mailController.sendMail);
+mainRouter.post('/send-mail', pdfController.generatedPDF ,mailController.sendMail);
 
 module.exports = mainRouter;

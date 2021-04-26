@@ -1,19 +1,13 @@
-const ejs = require("ejs");
 const pdf = require("html-pdf");
 const path = require("path");
 
 const students = [
-  { name: "Joy", email: "joy@example.com", city: "New York", country: "USA" },
-  {
-    name: "John",
-    email: "John@example.com",
-    city: "San Francisco",
-    country: "USA",
-  },
+  { name: "Mamang", email: "mamangfelix1@gmail.com"},
+  { name: "Felix", email: "lixtech20@gmail.com"},
 ];
 
 module.exports = {
-  generatedPDF: (_, res, next) => {
+  generatedPDF: (req, res, next) => {
     students.map((student) => {
       return res.render(
         path.join(__dirname, "../../views/", "report-template.ejs"),
@@ -27,7 +21,7 @@ module.exports = {
           };
           pdf
             .create(data, options)
-            .toFile("report" + student.name + ".pdf", (err) => {
+            .toFile("public/certificate/report" + student.name + ".pdf", (err, result) => {
               if (err) {
                 return res.send("Error ", err);
               }
@@ -35,6 +29,7 @@ module.exports = {
         }
       );
     });
-    return res.send("File Created");
+    req.students = students
+    next();
   },
 };
